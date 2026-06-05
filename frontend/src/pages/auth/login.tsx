@@ -196,8 +196,8 @@ export default function LoginPage() {
         style={{ background: 'rgba(79,140,255,0.1)', border: '1px solid rgba(79,140,255,0.2)' }}
       >
         <p className="font-semibold mb-1" style={{ color: 'rgba(255,255,255,0.7)' }}>Tài khoản demo:</p>
-        <p style={{ color: 'rgba(255,255,255,0.5)' }}>Admin: admin@hust.edu.vn</p>
-        <p style={{ color: 'rgba(255,255,255,0.5)' }}>GV: nva@hust.edu.vn | SV: lvc@students.hust.edu.vn</p>
+        <p style={{ color: 'rgba(255,255,255,0.5)' }}>Admin: admin@ptit.edu.vn</p>
+        <p style={{ color: 'rgba(255,255,255,0.5)' }}>GV: nva@ptit.edu.vn | SV: lvc@students.ptit.edu.vn</p>
       </div>
     </div>
   );

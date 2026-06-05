@@ -74,7 +74,7 @@ export default function HomePage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-semibold"
               style={{ background: 'rgba(79,140,255,0.12)', border: '1px solid rgba(79,140,255,0.25)', color: '#4F8CFF' }}>
-              🎓 Cộng đồng học tập HUST
+              🎓 Cộng đồng học tập PTIT
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-black mb-4 leading-tight" style={{ color: 'var(--text)' }}>

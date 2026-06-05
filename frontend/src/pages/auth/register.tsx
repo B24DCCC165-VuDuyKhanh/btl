@@ -195,7 +195,7 @@ export default function RegisterPage() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <Field label="Họ và tên" icon={<UserOutlined />} value={form.name} onChange={(v) => update('name', v)} error={errors.name} placeholder="Nguyễn Văn A" required />
         <Field label="Mã số (SV/GV)" icon={<IdcardOutlined />} value={form.code} onChange={(v) => update('code', v)} error={errors.code} placeholder={role === 'student' ? 'SV20210001' : 'GV001'} />
-        <Field label="Email" icon={<MailOutlined />} type="email" value={form.email} onChange={(v) => update('email', v)} error={errors.email} placeholder="email@hust.edu.vn" required />
+        <Field label="Email" icon={<MailOutlined />} type="email" value={form.email} onChange={(v) => update('email', v)} error={errors.email} placeholder="email@ptit.edu.vn" required />
         <Field label="Mật khẩu" icon={<LockOutlined />} type={showPassword ? 'text' : 'password'} value={form.password} onChange={(v) => update('password', v)} error={errors.password} placeholder="Ít nhất 6 ký tự" required showPasswordBtn onTogglePassword={() => setShowPassword(!showPassword)} />
 
         <div className="grid grid-cols-2 gap-3">

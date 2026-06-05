@@ -311,7 +311,7 @@ export default function AdminUsersPage() {
           {[
             { label: 'Họ và tên *', field: 'name' as const, placeholder: 'Nguyễn Văn A' },
             { label: 'Mã số', field: 'code' as const, placeholder: 'SV20210001' },
-            { label: 'Email *', field: 'email' as const, placeholder: 'email@hust.edu.vn', type: 'email' },
+            { label: 'Email *', field: 'email' as const, placeholder: 'email@ptit.edu.vn', type: 'email' },
             { label: editUser ? 'Mật khẩu mới (để trống nếu không đổi)' : 'Mật khẩu *', field: 'password' as const, placeholder: '••••••••', type: 'password' },
             { label: 'Khoa', field: 'faculty' as const, placeholder: 'Công nghệ Thông tin' },
             { label: 'Lớp', field: 'class' as const, placeholder: 'IT-01 K66' },
