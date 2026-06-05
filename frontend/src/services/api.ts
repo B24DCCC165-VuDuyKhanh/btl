@@ -44,7 +44,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem('auth-storage');
       window.location.href = '/auth/login';
     }
     return Promise.reject(error);
@@ -65,6 +65,10 @@ export const authAPI = {
   logout: () => api.post('/auth/logout'),
 
   me: () => api.get<User>('/auth/me'),
+};
+
+export const publicUsersAPI = {
+  getUserById: (id: string) => api.get<User>(`/auth/users/${id}`),
 };
 
 // ============================================================
@@ -88,7 +92,7 @@ export const postsAPI = {
     api.delete(`/forum/posts/${id}`),
 
   votePost: (id: string, voteType: VoteType) =>
-    api.post(`/forum/posts/${id}/vote`, { voteType }),
+    api.post(`/forum/posts/${id}/vote`, { direction: voteType }),
 
   getUserVote: (postId: string) =>
     api.get<{ voteType: VoteType | null }>(`/forum/posts/${postId}/my-vote`),
@@ -118,7 +122,7 @@ export const commentsAPI = {
     api.delete(`/forum/comments/${id}`),
 
   voteComment: (id: string, voteType: VoteType) =>
-    api.post(`/forum/comments/${id}/vote`, { voteType }),
+    api.post(`/forum/comments/${id}/vote`, { direction: voteType }),
 };
 
 // ============================================================

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { BookmarkFilled, LoadingOutlined } from '@ant-design/icons';
+import { BookFilled, LoadingOutlined } from '@ant-design/icons';
 import { postsAPI } from '@/services/api';
 import type { Post } from '@/types';
 import PostCard from '@/components/PostCard';
@@ -19,7 +19,7 @@ export default function SavedPostsPage() {
       return;
     }
     postsAPI.getSavedPosts()
-      .then((r) => setPosts((r.data as any) || []))
+      .then((r) => setPosts((r.data as any)?.data || []))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [isAuthenticated]);
@@ -32,7 +32,7 @@ export default function SavedPostsPage() {
             className="w-10 h-10 rounded-xl flex items-center justify-center"
             style={{ background: 'linear-gradient(135deg, #4F8CFF, #7B61FF)' }}
           >
-            <BookmarkFilled style={{ color: '#fff', fontSize: 18 }} />
+            <BookFilled style={{ color: '#fff', fontSize: 18 }} />
           </div>
           <div>
             <h1 className="text-2xl font-black" style={{ color: 'var(--text)' }}>Bài đã lưu</h1>
@@ -41,10 +41,9 @@ export default function SavedPostsPage() {
         </div>
 
         <div className="space-y-4">
-          {loading
-            ? Array.from({ length: 3 }).map((_, i) => <PostCardSkeleton key={i} />)
-            : posts.length === 0
-            ? (
+          {(() => {
+            if (loading) return Array.from({ length: 3 }).map((_, i) => <PostCardSkeleton key={i} />);
+            if (posts.length === 0) return (
               <div className="text-center py-16 rounded-2xl border" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
                 <div className="text-5xl mb-4">🔖</div>
                 <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text)' }}>Chưa lưu bài nào</h3>
@@ -57,9 +56,9 @@ export default function SavedPostsPage() {
                   Khám phá diễn đàn
                 </button>
               </div>
-            )
-            : posts.map((p, i) => <PostCard key={p.id} post={p} index={i} />)
-          }
+            );
+            return posts.map((p, i) => <PostCard key={p.id} post={p} index={i} />);
+          })()}
         </div>
       </motion.div>
     </div>

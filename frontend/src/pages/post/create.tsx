@@ -52,10 +52,12 @@ export default function CreatePostPage() {
 
     setLoading(true);
     try {
+      const selectedTags = tags.filter((t) => selectedTagIds.includes(t.id)).map((t) => t.name);
+      
       const res = await postsAPI.createPost({
         title: title.trim(),
         content: content.trim(),
-        tagIds: selectedTagIds,
+        tags: selectedTags,
         category,
       });
       const created = res.data as any;
@@ -78,9 +80,10 @@ export default function CreatePostPage() {
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
       <motion.button
         onClick={() => history.back()}
-        className="flex items-center gap-2 mb-6 text-sm font-medium"
-        style={{ color: 'var(--text-muted)' }}
-        whileHover={{ x: -3 }}
+        className="flex items-center gap-2 mb-6 text-sm font-semibold px-4 py-2 rounded-full border transition-all shadow-sm"
+        style={{ color: 'var(--text)', borderColor: 'var(--border)', background: 'var(--surface)' }}
+        whileHover={{ x: -4, background: 'rgba(79,140,255,0.08)', color: '#4F8CFF', borderColor: 'rgba(79,140,255,0.3)' }}
+        whileTap={{ scale: 0.96 }}
       >
         <ArrowLeftOutlined /> Quay lại
       </motion.button>

@@ -62,7 +62,7 @@ export default function Footer() {
 
         <div className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderColor: 'var(--border)' }}>
           <p className="text-xs" style={{ color: 'var(--text-light)' }}>
-            © 2024 Diễn Đàn Hỏi Đáp Sinh Viên. Built with React & TypeScript.
+            © {new Date().getFullYear()} Diễn Đàn Hỏi Đáp Sinh Viên. Built with React & TypeScript.
           </p>
           <div className="flex items-center gap-3">
             <span

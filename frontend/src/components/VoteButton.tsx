@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { LikeOutlined, DislikeOutlined, LikeFilled, DislikeFilled } from '@ant-design/icons';
 import type { VoteType } from '@/types';
 
 interface Props {
@@ -24,7 +24,7 @@ export default function VoteButton({ count, userVote, onVote, disabled, vertical
         style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}
         title="Hữu ích"
       >
-        <ArrowUpOutlined style={{ fontSize: 18 }} />
+        {userVote === 'up' ? <LikeFilled style={{ fontSize: 18 }} /> : <LikeOutlined style={{ fontSize: 18 }} />}
       </motion.button>
 
       {/* Count */}
@@ -58,7 +58,7 @@ export default function VoteButton({ count, userVote, onVote, disabled, vertical
         style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}
         title="Không hữu ích"
       >
-        <ArrowDownOutlined style={{ fontSize: 18 }} />
+        {userVote === 'down' ? <DislikeFilled style={{ fontSize: 18 }} /> : <DislikeOutlined style={{ fontSize: 18 }} />}
       </motion.button>
     </div>
   );

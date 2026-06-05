@@ -6,7 +6,7 @@ import {
   PlusOutlined,
   UserOutlined,
   BellOutlined,
-  BookmarkOutlined,
+  BookOutlined,
   LogoutOutlined,
   HomeOutlined,
   MessageOutlined,
@@ -53,12 +53,12 @@ export default function Navbar() {
     }
   };
 
-  const handleLogout = async () => {
-    try { await authAPI.logout(); } catch {}
+  const handleLogout = () => {
+    authAPI.logout().catch(() => {});
     logout();
+    setDropdownOpen(false);
     history.push('/auth/login');
     addToast('success', 'Đã đăng xuất thành công');
-    setDropdownOpen(false);
   };
 
   const getRoleBadge = () => {
@@ -231,7 +231,7 @@ export default function Navbar() {
                         {[
                           { label: 'Trang cá nhân', icon: <UserOutlined />, path: `/profile/${user?.id}` },
                           { label: 'Thông báo', icon: <BellOutlined />, path: '/notifications' },
-                          { label: 'Bài đã lưu', icon: <BookmarkOutlined />, path: '/saved-posts' },
+                          { label: 'Bài đã lưu', icon: <BookOutlined />, path: '/saved-posts' },
                           ...(isAdmin ? [{ label: 'Admin Panel', icon: <SettingOutlined />, path: '/admin/dashboard' }] : []),
                         ].map((item) => (
                           <button
@@ -360,13 +360,23 @@ export default function Navbar() {
                   </div>
                 )}
                 {isAuthenticated && (
-                  <button
-                    onClick={() => { history.push('/post/create'); setMobileMenuOpen(false); }}
-                    className="w-full py-2.5 rounded-xl text-sm font-semibold text-white"
-                    style={{ background: 'linear-gradient(135deg, #4F8CFF, #7B61FF)' }}
-                  >
-                    + Đặt câu hỏi
-                  </button>
+                  <div className="space-y-2 pt-2">
+                    <button
+                      onClick={() => { history.push('/post/create'); setMobileMenuOpen(false); }}
+                      className="w-full py-2.5 rounded-xl text-sm font-semibold text-white"
+                      style={{ background: 'linear-gradient(135deg, #4F8CFF, #7B61FF)' }}
+                    >
+                      + Đặt câu hỏi
+                    </button>
+                    <button
+                      onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
+                      className="w-full flex justify-center items-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150"
+                      style={{ background: 'rgba(239,68,68,0.08)', color: '#ef4444' }}
+                    >
+                      <LogoutOutlined />
+                      Đăng xuất
+                    </button>
+                  </div>
                 )}
               </div>
             </motion.div>

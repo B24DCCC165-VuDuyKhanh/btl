@@ -152,9 +152,21 @@ async function profile(req, res, next) {
   }
 }
 
+async function getUserById(req, res, next) {
+  try {
+    const user = await User.findByPk(req.params.id, {
+      attributes: { exclude: ['passwordHash'] },
+    });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+}
+
 // Reset mật khẩu tự phục vụ (chưa dùng, giữ stub)
 async function resetPassword(req, res) {
   res.status(501).json({ message: 'Chức năng chưa được triển khai.' });
 }
 
-module.exports = { register, login, logout, profile, resetPassword };
+module.exports = { register, login, logout, profile, getUserById, resetPassword };

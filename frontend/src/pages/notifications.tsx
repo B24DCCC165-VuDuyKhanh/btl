@@ -115,7 +115,8 @@ export default function NotificationsPage() {
                   }}
                   onClick={() => {
                     markOne(notif.id);
-                    if (notif.targetId) history.push(`/post/${notif.targetId}`);
+                    const target = notif.postId || notif.targetId;
+                    if (target) history.push(`/post/${target}`);
                   }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}

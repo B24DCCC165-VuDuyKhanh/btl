@@ -32,10 +32,9 @@ const forumValidator = {
       .isLength({ min: 1, max: 2000 }).withMessage('Comment must be 1-2000 characters')
   ],
 
-  // Vote validator
   vote: [
-    body('voteType')
-      .isIn([1, -1]).withMessage('Vote type must be 1 (up) or -1 (down)')
+    body('direction')
+      .isIn(['up', 'down']).withMessage('Direction must be "up" or "down"')
   ],
 
   // Search query validator

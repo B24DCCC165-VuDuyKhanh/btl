@@ -69,4 +69,9 @@ router.get(
   authController.profile,
 );
 
+/**
+ * Lấy thông tin public của người dùng bất kỳ
+ */
+router.get('/users/:id', authController.getUserById);
+
 module.exports = router;

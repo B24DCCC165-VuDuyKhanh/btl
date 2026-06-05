@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from '@umijs/max';
 import { motion } from 'framer-motion';
 import { UserOutlined, CalendarOutlined } from '@ant-design/icons';
-import { adminUsersAPI, postsAPI } from '@/services/api';
+import { publicUsersAPI, postsAPI } from '@/services/api';
 import type { User, Post } from '@/types';
 import PostCard from '@/components/PostCard';
 import { PostCardSkeleton } from '@/components/LoadingSkeleton';
@@ -24,7 +24,7 @@ export default function ProfilePage() {
     if (!id) return;
     setLoading(true);
     Promise.all([
-      adminUsersAPI.getUserById(id).then((r) => r.data),
+      publicUsersAPI.getUserById(id).then((r) => r.data),
       postsAPI.getPosts({ limit: 20 }).then((r) => (r.data as any)?.data || []),
     ])
       .then(([userData, postsData]) => {

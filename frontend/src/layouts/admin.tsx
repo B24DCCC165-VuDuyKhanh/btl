@@ -28,8 +28,8 @@ export default function AdminLayout() {
   const { addToast } = useUIStore();
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
 
-  const handleLogout = async () => {
-    try { await authAPI.logout(); } catch {}
+  const handleLogout = () => {
+    authAPI.logout().catch(() => {});
     logout();
     history.push('/auth/login');
     addToast('success', 'Đã đăng xuất thành công');

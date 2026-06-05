@@ -40,10 +40,17 @@ async function sendEmail(to, subject, text, html = null) {
 }
 
 async function notifyUser(recipientId, type, targetId, message) {
+  let dbType = type;
+  if (!['NEW_COMMENT', 'NEW_REPLY', 'NEW_POST', 'POST_VOTE', 'COMMENT_VOTE'].includes(type)) {
+    if (type.toLowerCase() === 'post_created') dbType = 'NEW_POST';
+    else dbType = 'NEW_POST'; // fallback
+  }
+
   const notification = await Notification.create({
     recipientId,
-    type,
-    targetId,
+    type: dbType,
+    title: 'Thông báo',
+    postId: targetId,
     message,
   });
 
