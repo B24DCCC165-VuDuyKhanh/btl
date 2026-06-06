@@ -43,7 +43,7 @@ export default function ForumPage() {
         limit: 10,
       });
       const d = res.data as any;
-      setPosts(d.data || []);
+      setPosts(Array.isArray(d.data) ? d.data : []);
       setTotal(d.pagination?.total || 0);
     } catch {
       setPosts([]);
@@ -52,7 +52,11 @@ export default function ForumPage() {
     }
   }, [search, selectedTag, sort, page]);
 
-  useEffect(() => { tagsAPI.getTags().then((r) => setTags(r.data as any || [])).catch(() => {}); }, []);
+  useEffect(() => { 
+    tagsAPI.getTags()
+      .then((r) => setTags(Array.isArray(r.data) ? r.data : []))
+      .catch(() => setTags([])); 
+  }, []);
   useEffect(() => { fetchPosts(); }, [fetchPosts]);
 
   const handleSearch = (e: React.FormEvent) => {

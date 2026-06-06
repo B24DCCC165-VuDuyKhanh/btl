@@ -9,6 +9,13 @@
   publish = "dist"
 
 [[redirects]]
+  # Proxy toàn bộ API sang Backend thực tế trên Railway
+  from = "/api/*"
+  to = "https://btl-production.up.railway.app/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   # Chuyển hướng mọi request về index.html để React Router xử lý Client-side routing
   from = "/*"
   to = "/index.html"
