@@ -106,19 +106,37 @@ export interface PaginatedResponse<T> {
 // ============================================================
 
 export interface AdminStats {
-  totalPosts: number;
-  totalUsers: number;
-  totalComments: number;
-  totalTags: number;
-  activeUsers: number;
-  lockedUsers: number;
-  postsToday: number;
-  recentActivity?: Array<{
-    date: string;
-    posts: number;
-    comments: number;
+  // Tổng quan
+  totalPosts:      number;
+  totalUsers:      number;
+  totalComments:   number;
+  totalTags:       number;
+  totalVotes:      number;
+  totalViews:      number;
+  postsToday:      number;
+  postsThisWeek:   number;
+  commentsToday:   number;
+  activeUsers:     number;
+
+  // Phân tích người dùng
+  usersByRole:   Record<string, number>;  // student | lecturer | admin
+  usersByStatus: Record<string, number>;  // active | locked
+
+  // Phân tích bài viết
+  postsByStatus: Record<string, number>;  // active | hidden | deleted
+
+  // Xu hướng 7 ngày
+  recentActivity: Array<{ date: string; label: string; posts: number; comments: number }>;
+
+  // Top nội dung
+  popularTags: Array<{ id: string; name: string; color: string; count: number }>;
+  topPosts:    Array<{
+    id: string; title: string; votes: number; views: number;
+    answersCount: number; createdAt: string;
+    author?: { id: string; name: string; role: string };
   }>;
 }
+
 
 // ============================================================
 // Form Types

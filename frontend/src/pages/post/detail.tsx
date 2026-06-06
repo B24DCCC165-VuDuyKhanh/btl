@@ -122,11 +122,29 @@ export default function PostDetailPage() {
       {/* Back */}
       <motion.button
         onClick={() => history.back()}
-        className="flex items-center gap-2 mb-6 text-sm font-medium transition-colors"
-        style={{ color: 'var(--text-muted)' }}
-        whileHover={{ x: -3 }}
+        className="flex items-center gap-2 mb-6 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
+        style={{
+          background: 'var(--surface)',
+          border: '1.5px solid var(--border)',
+          color: 'var(--text-muted)',
+        }}
+        whileHover={{
+          x: -3,
+          color: '#4F8CFF',
+          borderColor: 'rgba(79,140,255,0.4)',
+          background: 'rgba(79,140,255,0.06)',
+          boxShadow: '0 4px 16px rgba(79,140,255,0.12)',
+        } as any}
+        whileTap={{ scale: 0.97 }}
       >
-        <ArrowLeftOutlined /> Quay lại
+        <motion.span
+          initial={{ x: 0 }}
+          whileHover={{ x: -2 }}
+          style={{ display: 'inline-block', fontSize: 15 }}
+        >
+          ←
+        </motion.span>
+        Quay lại
       </motion.button>
 
       {/* Post card */}

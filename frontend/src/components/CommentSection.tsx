@@ -58,7 +58,22 @@ export default function CommentSection({ postId, comments, onCommentsChange }: P
 
   const handleVoteComment = async (commentId: string, voteType: 'up' | 'down') => {
     try {
-      await commentsAPI.voteComment(commentId, voteType);
+      const res = await commentsAPI.voteComment(commentId, voteType);
+      const updated = res.data as any;
+      // Cập nhật comment trong danh sách với votes + userVote từ server
+      if (onCommentsChange) {
+        const updateTree = (list: Comment[]): Comment[] =>
+          list.map((c) => {
+            if (c.id === commentId) {
+              return { ...c, votes: updated.votes, userVote: updated.userVote };
+            }
+            if (c.replies?.length) {
+              return { ...c, replies: updateTree(c.replies) };
+            }
+            return c;
+          });
+        onCommentsChange(updateTree(comments));
+      }
     } catch (err: any) {
       toast.error(err?.response?.data?.message || 'Không thể vote');
     }

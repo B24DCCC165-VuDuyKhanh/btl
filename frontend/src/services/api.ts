@@ -76,8 +76,18 @@ export const publicUsersAPI = {
 // ============================================================
 
 export const postsAPI = {
-  getPosts: (filters?: PostFilters) =>
-    api.get<PaginatedResponse<Post>>('/forum/posts', { params: filters }),
+  getPosts: (filters?: PostFilters) => {
+    const params: Record<string, any> = { ...filters };
+    if (params.search !== undefined) {
+      params.q = params.search;
+      delete params.search;
+    }
+    if (params.tagId !== undefined) {
+      params.tags = params.tagId;
+      delete params.tagId;
+    }
+    return api.get<PaginatedResponse<Post>>('/forum/posts', { params });
+  },
 
   getPostById: (id: string) =>
     api.get<Post>(`/forum/posts/${id}`),

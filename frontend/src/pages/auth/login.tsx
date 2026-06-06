@@ -190,15 +190,6 @@ export default function LoginPage() {
         </button>
       </p>
 
-      {/* Demo accounts */}
-      <div
-        className="mt-5 p-3 rounded-xl text-xs"
-        style={{ background: 'rgba(79,140,255,0.1)', border: '1px solid rgba(79,140,255,0.2)' }}
-      >
-        <p className="font-semibold mb-1" style={{ color: 'rgba(255,255,255,0.7)' }}>Tài khoản demo:</p>
-        <p style={{ color: 'rgba(255,255,255,0.5)' }}>Admin: admin@ptit.edu.vn</p>
-        <p style={{ color: 'rgba(255,255,255,0.5)' }}>GV: nva@ptit.edu.vn | SV: lvc@students.ptit.edu.vn</p>
-      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 // ✨ CẬP NHẬT FILE: backend/routes/forum.js
 const express = require('express');
-const { authenticate, authorize } = require('../middlewares/authMiddleware');
+const { authenticate, optionalAuth } = require('../middlewares/authMiddleware');
 const postController = require('../controllers/postController');
 const postActionController = require('../controllers/postActionController');
 const postSaveController = require('../controllers/postSaveController');
@@ -21,7 +21,7 @@ router.get(
 
 router.get('/posts/:id', postController.getPostById);
 
-router.get('/posts/:postId/comments', commentController.getComments);
+router.get('/posts/:postId/comments', optionalAuth, commentController.getComments);
 
 router.get('/tags', tagController.getTags);
 

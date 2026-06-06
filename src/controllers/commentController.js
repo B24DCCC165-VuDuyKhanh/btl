@@ -1,5 +1,6 @@
 const { Comment, Post, User, CommentVote } = require('../models');
 const { notifyUser } = require('../utils/notificationService');
+const { Op } = require('sequelize');
 
 function buildCommentTree(comments) {
   const map = new Map();
@@ -23,8 +24,8 @@ function buildCommentTree(comments) {
 
 async function getComments(req, res, next) {
   try {
-    // postId có thể nằm ở :id (route cũ) hoặc :postId (route mới)
-    const postId = req.params.postId || req.params.id;
+    const postId  = req.params.postId || req.params.id;
+    const userId  = req.user?.id || null;  // null nếu chưa đăng nhập
 
     const comments = await Comment.findAll({
       where: { postId },
@@ -38,7 +39,25 @@ async function getComments(req, res, next) {
       order: [['createdAt', 'ASC']],
     });
 
-    res.json(buildCommentTree(comments));
+    // Lấy tất cả votes của user hiện tại cho các comment này
+    let userVoteMap = {};
+    if (userId && comments.length > 0) {
+      const commentIds = comments.map(c => c.id);
+      const userVotes = await CommentVote.findAll({
+        where: { commentId: { [Op.in]: commentIds }, userId },
+        attributes: ['commentId', 'voteType'],
+        raw: true,
+      });
+      userVoteMap = Object.fromEntries(userVotes.map(v => [v.commentId, v.voteType]));
+    }
+
+    // Gắn userVote vào từng comment
+    const commentsWithVote = comments.map(c => {
+      const plain = c.get ? c.get({ plain: true }) : c;
+      return { ...plain, userVote: userVoteMap[plain.id] || null };
+    });
+
+    res.json(buildCommentTree(commentsWithVote));
   } catch (error) {
     next(error);
   }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, history } from '@umijs/max';
+import { Outlet, history, useLocation } from '@umijs/max';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   DashboardOutlined,
@@ -26,7 +26,8 @@ export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const { user, logout } = useAuthStore();
   const { addToast } = useUIStore();
-  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const handleLogout = () => {
     authAPI.logout().catch(() => {});
@@ -161,14 +162,27 @@ export default function AdminLayout() {
           </button>
 
           <div className="flex items-center gap-3">
-            <button
-              className="p-2 rounded-xl transition-all duration-200"
-              style={{ color: 'var(--text-muted)' }}
+            <motion.button
               onClick={() => history.push('/')}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
+              style={{
+                background: 'linear-gradient(135deg, rgba(79,140,255,0.12), rgba(123,97,255,0.08))',
+                border: '1px solid rgba(79,140,255,0.25)',
+                color: '#4F8CFF',
+              }}
+              whileHover={{
+                scale: 1.04,
+                boxShadow: '0 4px 20px rgba(79,140,255,0.25)',
+                background: 'linear-gradient(135deg, rgba(79,140,255,0.2), rgba(123,97,255,0.15))',
+              } as any}
+              whileTap={{ scale: 0.97 }}
+              title="Về trang chủ"
             >
-              <span className="text-sm font-medium">← Về trang chủ</span>
-            </button>
+              <span style={{ fontSize: 14 }}>🏠</span>
+              <span>Trang chủ</span>
+            </motion.button>
           </div>
+
         </header>
 
         {/* Content */}

@@ -90,7 +90,17 @@ async function voteComment(req, res, next) {
     }
 
     await comment.save();
-    res.json(comment);
+
+    // Xác định userVote thực tế sau khi vote
+    const remainVote = await CommentVote.findOne({
+      where: { commentId: id, userId: req.user.id },
+      attributes: ['voteType'],
+      raw: true,
+    });
+    const userVote = remainVote ? remainVote.voteType : null;
+
+    res.json({ ...comment.get({ plain: true }), userVote });
+
   } catch (error) {
     next(error);
   }

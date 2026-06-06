@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { SearchOutlined, FilterOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { postsAPI, tagsAPI } from '@/services/api';
 import type { Post, Tag } from '@/types';
 import PostCard from '@/components/PostCard';
@@ -20,13 +20,12 @@ export default function SearchPage() {
   const [search, setSearch] = useState(query);
 
   const fetchResults = useCallback(async () => {
-    if (!query && !tagFilter) return;
     setLoading(true);
     try {
       const res = await postsAPI.getPosts({ search: query || undefined, tagId: tagFilter || undefined, limit: 20 });
       const d = res.data as any;
       setPosts(d.data || []);
-      setTotal(d.pagination?.total || 0);
+      setTotal(d.pagination?.total || d.total || 0);
     } catch {
       setPosts([]);
     } finally {
@@ -109,23 +108,18 @@ export default function SearchPage() {
         </div>
 
         {/* Results header */}
-        {(query || tagFilter) && (
-          <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
-            {loading ? 'Đang tìm kiếm...' : `${total} kết quả cho "${query || tags.find((t) => t.id === tagFilter)?.name || ''}"`}
-          </p>
-        )}
+        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+          {loading 
+            ? 'Đang tải kết quả...' 
+            : (query || tagFilter) 
+              ? `${total} kết quả cho "${query || tags.find((t) => t.id === tagFilter)?.name || ''}"`
+              : `${total} câu hỏi`}
+        </p>
 
         {/* Results */}
         <div className="space-y-4">
           {loading
             ? Array.from({ length: 5 }).map((_, i) => <PostCardSkeleton key={i} />)
-            : !query && !tagFilter
-            ? (
-              <div className="text-center py-16 rounded-2xl border" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>
-                <div className="text-5xl mb-4">🔍</div>
-                <p style={{ color: 'var(--text-muted)' }}>Nhập từ khóa để tìm kiếm</p>
-              </div>
-            )
             : posts.length === 0
             ? (
               <div className="text-center py-16 rounded-2xl border" style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}>

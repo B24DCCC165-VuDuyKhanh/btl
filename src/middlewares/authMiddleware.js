@@ -17,4 +17,21 @@ function authenticate(req, res, next) {
   }
 }
 
-module.exports = { authenticate };
+// Decode token nếu có, nhưng không block nếu không có / token hỏng
+function optionalAuth(req, res, next) {
+  const authHeader = req.headers.authorization || req.headers.Authorization;
+  if (!authHeader) return next();
+
+  const parts = authHeader.split(' ');
+  const token = parts.length === 2 ? parts[1] : parts[0];
+
+  try {
+    const payload = jwt.verify(token, jwtConfig.secret);
+    req.user = payload;
+  } catch (_) {
+    // token hỏng hoặc hết hạn → bỏ qua, req.user = undefined
+  }
+  return next();
+}
+
+module.exports = { authenticate, optionalAuth };
