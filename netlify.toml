@@ -11,7 +11,7 @@
 [[redirects]]
   # Proxy toàn bộ API sang Backend thực tế trên Railway
   from = "/api/*"
-  to = "https://btl-production.up.railway.app/api/:splat"
+  to = "https://btl.up.railway.app/api/:splat"
   status = 200
   force = true
 
