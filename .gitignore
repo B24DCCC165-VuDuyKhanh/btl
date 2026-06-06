@@ -1,0 +1,43 @@
+# ─── Dependencies ──────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ─── Build outputs ──────────────────────────────────────────
+dist/
+build/
+out/
+.output/
+frontend/dist/
+
+# ─── UmiJS / Max ────────────────────────────────────────────
+.umi/
+.umi-production/
+.umi-test/
+frontend/.umi/
+frontend/.umi-production/
+frontend/.umi-test/
+
+# ─── Cache ──────────────────────────────────────────────────
+.cache/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+frontend/.cache/
+
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── OS generated ───────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+ehthumbs.db

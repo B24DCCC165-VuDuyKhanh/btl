@@ -1,0 +1,15 @@
+[build]
+  # Thư mục chứa mã nguồn frontend
+  base = "frontend"
+  
+  # Lệnh dùng để build project
+  command = "npm run build"
+  
+  # Thư mục chứa file sau khi build (đối với UmiJS mặc định là dist)
+  publish = "dist"
+
+[[redirects]]
+  # Chuyển hướng mọi request về index.html để React Router xử lý Client-side routing
+  from = "/*"
+  to = "/index.html"
+  status = 200
