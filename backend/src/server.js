@@ -8,7 +8,7 @@ async function start() {
   try {
     await sequelize.authenticate();
     console.log('MySQL connection established successfully.');
-    await sequelize.sync();
+    await sequelize.authenticate();
     app.listen(PORT, () => {
       console.log(`Backend server is running on http://localhost:${PORT}`);
     });
